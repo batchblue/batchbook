@@ -39,7 +39,7 @@ module BatchBook
   self.host_format = '%s://%s/%s'
   self.domain_format = '%s.batchbook.com'
   self.path = 'service'
-  self.protocol = 'http'
+  self.protocol = 'https'
  
   class Base < ActiveResource::Base
     def self.inherited(base)
