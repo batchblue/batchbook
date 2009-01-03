@@ -38,7 +38,7 @@ activeresource
 
 == INSTALL:
 
-sudo gem install batchbook
+sudo gem install batchblue-batchbook
 
 == LICENSE:
 
