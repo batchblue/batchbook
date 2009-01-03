@@ -11,6 +11,8 @@ require 'activeresource'
 #
 #
 module BatchBook
+  VERSION = '1.0.0'
+  
   class Error < StandardError; end
   class << self
     attr_accessor :token, :host_format, :site_format, :domain_format, :protocol, :path
@@ -52,32 +54,17 @@ module BatchBook
     end
   end
   
-  # people = Person.find(:all)
-  #
-  # person = BatchBook::Person.find(id)
-  #
-  # person = BatchBook::Person.new :first_name => 'will', :last_name => 'larson', :title => 'dev'
-  # person.save
-  #
-  # person.last_name = 'new last name'
-  # person.save
-  #
-  #
   class Person < Base
     def tags
       Tag.find(:all, :params => {:contact_id => id})
     end
 
     def locations
-      Location.find(:all, :params => {:record_id => id})
+      Location.find(:all, :params => {:contact_id => id})
     end
     
     def supertags
       SuperTag.find(:all, :params => {:contact_id => id})
-    end
-    
-    def communications
-      Communication.find(:all, :params => {:contact_id => id})
     end
     
     def add_tag tag
@@ -98,16 +85,21 @@ module BatchBook
   end
 
   class Todo < Base
+    def tags
+      Tag.find(:all, :params => {:todo_id => id})
+    end
   end
 
   class Communication < Base
+    def tags
+      Tag.find(:all, :params => {:communication_id => id})
+    end    
   end
 
   class Tag < Base
   end
 
   class Location < Base
-    site_format << '/records/:record_id'
   end
 
   class SuperTag < Base
@@ -119,9 +111,15 @@ __END__
 
 require 'batchbook'
 BatchBook.account = 'devo'
-BatchBook.token = 'GMXdRvTXAD'
+BatchBook.token = 'xyZ'
 
 person = BatchBook::Person.find 1937
+person.last_name = 'new last name'
+person.save
+
+new_person = BatchBook::Person.new :first_name => 'will', :last_name => 'larson', :title => 'dev'
+new_person.save
+
 
 
 
