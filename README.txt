@@ -60,7 +60,7 @@ activeresource
 
 == INSTALL:
 
-sudo gem install batchblue-batchbook
+git clone git://github.com/batchblue/batchbook.git 
 
 == LICENSE:
 
