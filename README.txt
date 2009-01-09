@@ -12,24 +12,46 @@ Basic CRUD features for the data in your account: People, Companies, Communicati
 
 == SYNOPSIS:
 
->> require 'batchbook'
-=> true
->> BatchBook.account = 'batchblue'
-=> "batchblue"
->> BatchBook.token = 'xyz'
-=> "xyz"
->> person = BatchBook::Person.find(5)
-=> #<BatchBook::Person:0x18256e4 @attributes={"company"=>"BatchBlue Software", "title"=>"SDE", "id"=>5, "notes"=>nil, "first_name"=>"Will", "last_name"=>"Larson"}, @prefix_options={}>
->> person.tags
+require 'batchbook'
+BatchBook.account = 'devo'
+BatchBook.token = 'xyZ'
+
+#also work for company
+search_by_name = BatchBook::Person.find(:all, :params => {:name => 'will larson'} )
+search_by_email = BatchBook::Person.find(:all, :params => {:email => will@batchblue.com})
+
+person = BatchBook::Person.find(5)
+=> #<BatchBook::Person:0x1822c3c @attributes={"company"=>"BatchBlue Software", "title"=>"Software Developer", "id"=>5, "notes"=>nil, "first_name"=>"Will", "last_name"=>"Larson"}, @prefix_options={}>
+
+person.tags
 => [#<BatchBook::Tag:0x1816f18 @attributes={"name"=>"batchblue", "id"=>2}, @prefix_options={}>]
->> person.locations
+
+person.locations
 => [#<BatchBook::Location:0x17cb7e8 @attributes={"city"=>"Seattle", "postal_code"=>"98101", "cell"=>"123-456-7890", "street_1"=>"123 Main Street", "street_2"=>nil, "country"=>"United States", "id"=>5, "website"=>"www.batchblue.com", "fax"=>nil, "phone"=>nil, "label"=>"work", "state"=>"WA", "email"=>"wlarson@batchblue.com"}, @prefix_options={}>]
->> person.last_name = 'Larsen'
-=> "Larsen"
->> person.save
-=> true
->> person.reload.last_name
-=> "Larsen"
+
+person.location 'work'
+=> #<BatchBook::Location:0x17cb7e8 @attributes={"city"=>"Seattle", "postal_code"=>"98101", "cell"=>"123-456-7890", "street_1"=>"123 Main Street", "street_2"=>nil, "country"=>"United States", "id"=>5, "website"=>"www.batchblue.com", "fax"=>nil, "phone"=>nil, "label"=>"work", "state"=>"WA", "email"=>"wlarson@batchblue.com"}, @prefix_options={}>
+
+person.supertags
+=> [#<BatchBook::SuperTag:0x17e5170 @attributes={"name"=>"reference", "id"=>5149}, @prefix_options={}>, #<BatchBook::SuperTag:0x17e515c @attributes={"name"=>"work schedule", "tuesday"=>"8-4", "wednesday"=>"9-5 PST", "thursday"=>"9-5 PST", "id"=>1948, "monday"=>"9-5 PST", "friday"=>"9-5 PST"}, @prefix_options={}>]
+
+person.supertag 'work schedule'
+=> #<BatchBook::SuperTag:0x17c7ea4 @attributes={"name"=>"work schedule", "tuesday"=>"8-4", "wednesday"=>"9-5 PST", "thursday"=>"9-5 PST", "id"=>1948, "monday"=>"9-5 PST", "friday"=>"9-5 PST"}, @prefix_options={}>
+
+company = BatchBook::Company.find(:all, :params =>{:name => 'BatchBlue'}).first
+=> #<BatchBook::Company:0x1762fcc @attributes={"name"=>"BatchBlue Software", "id"=>2, "notes"=>nil}, @prefix_options={}>
+
+company.tags
+=> []
+
+company.supertags
+=> []
+
+company.locations
+=> [#<BatchBook::Location:0x1737cb4 @attributes={"city"=>"Barrington", "postal_code"=>"02806", "cell"=>nil, "street_1"=>"18 Maple Ave.", "street_2"=>"Suite #300", "country"=>"United States", "id"=>622, "website"=>"http://batchblue.com", "fax"=>"(401) 633-6526", "phone"=>"(888) 402-2824", "label"=>"main", "email"=>"info@batchblue.com", "state"=>"RI"}, @prefix_options={}>]
+
+company.location 'main'
+=> #<BatchBook::Location:0x17225bc @attributes={"city"=>"Barrington", "postal_code"=>"02806", "cell"=>nil, "street_1"=>"18 Maple Ave.", "street_2"=>"Suite #300", "country"=>"United States", "id"=>622, "website"=>"http://batchblue.com", "fax"=>"(401) 633-6526", "phone"=>"(888) 402-2824", "label"=>"main", "email"=>"info@batchblue.com", "state"=>"RI"}, @prefix_options={}>
 
 
 == REQUIREMENTS:

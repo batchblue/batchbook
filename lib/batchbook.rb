@@ -11,7 +11,7 @@ require 'activeresource'
 #
 #
 module BatchBook
-  VERSION = '1.0.1'
+  VERSION = '1.0.2'
   
   class Error < StandardError; end
   class << self
@@ -63,24 +63,66 @@ module BatchBook
       Location.find(:all, :params => {:contact_id => id})
     end
     
+    def location label
+      raise Error, "Location label not specified.  Usage:  person.location('label_name')" unless label
+      locs = Location.find(:all, :params => {:contact_id => id, :label => label})
+      return locs.size > 0 ? locs.first : nil
+    end
+    
     def supertags
       SuperTag.find(:all, :params => {:contact_id => id})
     end
     
+    def supertag name
+      raise Error, "SuperTag name not specified.  Usage:  person.supertag('tag_name')" unless name
+      sts = SuperTag.find(:all, :params => {:contact_id => id, :name => name})
+      return sts.size > 0 ? sts.first : nil
+    end
+    
     def add_tag tag
-      if tag.kind_of?(BatchBook::Tag)
-        tag.put(:add_to, :contact_id => id)
-      else
-        raise Error, "#{tag} is not a BatchBook::Tag"
-      end
+      raise Error, "#{tag} is not a BatchBook::Tag" unless tag.kind_of?(BatchBook::Tag)
+      tag.put(:add_to, :contact_id => id)
     end
     
     def remove_tag tag
-      if tag.kind_of?(BatchBook::Tag)
-        tag.put(:remove_from, :contact_id => id)
-      else
-        raise Error, "#{tag} is not a BatchBook::Tag"
-      end
+      raise Error, "#{tag} is not a BatchBook::Tag" unless tag.kind_of?(BatchBook::Tag)
+      tag.put(:remove_from, :contact_id => id)
+    end
+  end
+
+  class Company < Base
+    def tags
+      Tag.find(:all, :params => {:contact_id => id})
+    end
+
+    def locations
+      Location.find(:all, :params => {:contact_id => id})
+    end
+    
+    def location label
+      raise Error, "Location label not specified.  Usage:  person.location('label_name')" unless label
+      locs = Location.find(:all, :params => {:contact_id => id, :label => label})
+      return locs.size > 0 ? locs.first : nil
+    end
+    
+    def supertags
+      SuperTag.find(:all, :params => {:contact_id => id})
+    end
+    
+    def supertag name
+      raise Error, "SuperTag name not specified.  Usage:  person.supertag('tag_name')" unless name
+      sts = SuperTag.find(:all, :params => {:contact_id => id, :name => name})
+      return sts.size > 0 ? sts.first : nil
+    end
+    
+    def add_tag tag
+      raise Error, "#{tag} is not a BatchBook::Tag" unless tag.kind_of?(BatchBook::Tag)
+      tag.put(:add_to, :contact_id => id)
+    end
+    
+    def remove_tag tag
+      raise Error, "#{tag} is not a BatchBook::Tag" unless tag.kind_of?(BatchBook::Tag)
+      tag.put(:remove_from, :contact_id => id)
     end
   end
 
@@ -112,6 +154,9 @@ __END__
 require 'batchbook'
 BatchBook.account = 'devo'
 BatchBook.token = 'xyZ'
+
+search_by_name = BatchBook::Person.find(:all, :params => {:name => 'will'} )
+search_by_email = BatchBook::Person.find(:all, :params => {:email => will@batchblue.com})
 
 person = BatchBook::Person.find 1937
 person.last_name = 'new last name'
