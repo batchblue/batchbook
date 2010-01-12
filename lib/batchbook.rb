@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'activeresource'
+require 'active_resource'
 
 # Ruby lib for working with the BatchBook's API's XML interface. Set the account
 # name and authentication token, using the BatchBook API Key found in your 
@@ -39,9 +39,9 @@ module BatchBook
   end
   
   self.host_format = '%s://%s/%s'
-  self.domain_format = '%s.batchbook.com'
+  self.domain_format = '%s.localhost:3000'
   self.path = 'service'
-  self.protocol = 'https'
+  self.protocol = 'http'
  
   class Base < ActiveResource::Base
     def self.inherited(base)
@@ -57,26 +57,24 @@ module BatchBook
   class Person < Base
     def tags
       Tag.find(:all, :params => {:contact_id => id})
+    end   
+    
+    def locations
+      self.get('locations')     
     end
 
-    def locations
-      Location.find(:all, :params => {:contact_id => id})
-    end
-    
     def location label
       raise Error, "Location label not specified.  Usage:  person.location('label_name')" unless label
-      locs = Location.find(:all, :params => {:contact_id => id, :label => label})
-      return locs.size > 0 ? locs.first : nil
+      self.get('locations', :label => label)       
     end
     
-    def supertags
-      SuperTag.find(:all, :params => {:contact_id => id})
+    def supertags    
+      self.get('super_tags')     
     end
     
     def supertag name
       raise Error, "SuperTag name not specified.  Usage:  person.supertag('tag_name')" unless name
-      sts = SuperTag.find(:all, :params => {:contact_id => id, :name => name})
-      return sts.size > 0 ? sts.first : nil
+      self.get('super_tags', :name => name)         
     end
     
     def add_tag tag
@@ -93,26 +91,24 @@ module BatchBook
   class Company < Base
     def tags
       Tag.find(:all, :params => {:contact_id => id})
-    end
-
+    end          
+    
     def locations
-      Location.find(:all, :params => {:contact_id => id})
+      self.get('locations')     
     end
     
     def location label
       raise Error, "Location label not specified.  Usage:  person.location('label_name')" unless label
-      locs = Location.find(:all, :params => {:contact_id => id, :label => label})
-      return locs.size > 0 ? locs.first : nil
+      self.get('locations', :label => label)             
     end
     
-    def supertags
-      SuperTag.find(:all, :params => {:contact_id => id})
+    def supertags   
+      self.get('super_tags')
     end
     
     def supertag name
       raise Error, "SuperTag name not specified.  Usage:  person.supertag('tag_name')" unless name
-      sts = SuperTag.find(:all, :params => {:contact_id => id, :name => name})
-      return sts.size > 0 ? sts.first : nil
+      self.get('super_tags', :name => name)    
     end
     
     def add_tag tag
@@ -146,6 +142,8 @@ module BatchBook
 
   class SuperTag < Base
   end
+  
+
 
 end
 
