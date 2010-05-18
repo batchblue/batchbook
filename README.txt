@@ -6,15 +6,27 @@ http://github.com/batchblue/batchbook
 
 Wrapper for BatchBook XML API
 
+== API
+
+API : http://developer.batchblue.com/
+
 == FEATURES/PROBLEMS:
 
 Basic CRUD features for the data in your account: People, Companies, Communications, To-Dos.  Also custom methods for adding/removing Tags & SuperTags from a record, as well as updating SuperTag data for a particular record.
+
+== TODO:
+
+* Fix supertag creation + deletion
+* Delete location methods for 'Person' & 'Company'
 
 == SYNOPSIS:
 
 require 'batchbook'
 BatchBook.account = 'devo'
 BatchBook.token = 'xyZ'
+
+#In development to test the urls being used:
+ActiveResource::Base.logger = Logger.new(STDOUT)
 
 #also work for company
 search_by_name = BatchBook::Person.find(:all, :params => {:name => 'will larson'} )
@@ -53,6 +65,17 @@ company.locations
 company.location 'main'
 => #<BatchBook::Location:0x17225bc @attributes={"city"=>"Barrington", "postal_code"=>"02806", "cell"=>nil, "street_1"=>"18 Maple Ave.", "street_2"=>"Suite #300", "country"=>"United States", "id"=>622, "website"=>"http://batchblue.com", "fax"=>"(401) 633-6526", "phone"=>"(888) 402-2824", "label"=>"main", "email"=>"info@batchblue.com", "state"=>"RI"}, @prefix_options={}>
 
+== ADDITIONAL EXAMPLES
+
+person = BatchBook::Person.new(:first_name => 'Test', :last_name => 'Name', :notes => "Created via batchbook API")
+person.save
+
+person.add_tag('some tag name')
+person.remove_tag('some tag name')
+
+person.add_location(  :email => 'test@here.com.au', :phone => '1234 1234', :cell => '2345 2345', :fax => '5678 5678',
+                      :street_1 => 'Test Street 1', :street_2 => 'Test Street 2', :city => 'Test City', :state => 'VIC',
+                      :postal_code => '1234', :country => 'Australia')
 
 == REQUIREMENTS:
 
@@ -60,7 +83,7 @@ activeresource
 
 == INSTALL:
 
-git clone git://github.com/batchblue/batchbook.git 
+git clone git://github.com/batchblue/batchbook.git
 
 == LICENSE:
 

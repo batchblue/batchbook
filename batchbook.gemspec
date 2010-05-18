@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{batchbook}
-  s.version = "1.0.2"
+  s.version = "1.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Will Larson"]
@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
   s.signing_key = %q{/Users/will/.gem/gem-private_key.pem}
   s.summary = %q{Wrapper for BatchBook XML API}
 
-  s.add_dependency(%q<activeresource>, ["= 2.1.0"])
+  s.add_dependency(%q<activeresource>, ["= 2.3.5"])
 end
