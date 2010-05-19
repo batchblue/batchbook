@@ -15,7 +15,7 @@ module BatchBook
 
   class Error < StandardError; end
   class << self
-    attr_accessor :token, :host_format, :site_format, :domain_format, :protocol, :path
+    attr_accessor :host_format, :site_format, :domain_format, :protocol, :path
     attr_reader :account, :token
 
     # Sets the account name, and updates all the resources with the new domain.
@@ -30,6 +30,12 @@ module BatchBook
     def token=(value)
       resources.each do |r|
         r.user = value
+      end
+    end
+    
+    def site=(value)
+      resources.each do |r|
+        r.site = value
       end
     end
 
@@ -161,11 +167,48 @@ module BatchBook
     def tags
       Tag.find(:all, :params => {:todo_id => id})
     end
+    
+    def add_tag name
+      raise Error, "Tag name not specified.  Usage:  todo.add_tag('tag_name')" unless name
+      self.put(:add_tag, :tag => name)
+    end
+
+    def remove_tag name
+      raise Error, "Tag name not specified.  Usage:  todo.remove_tag('tag_name')" unless name
+      self.delete(:remove_tag, :tag => name)
+    end
+  end
+  
+  class Deal < Base
+    def tags
+      Tag.find(:all, :params => {:deal_id => id})
+    end
+    
+    def add_tag name
+      raise Error, "Tag name not specified.  Usage:  deal.add_tag('tag_name')" unless name
+      self.put(:add_tag, :tag => name)
+    end
+
+    def remove_tag name
+      raise Error, "Tag name not specified.  Usage:  deal.remove_tag('tag_name')" unless name
+      self.delete(:remove_tag, :tag => name)
+    end
+    
   end
 
   class Communication < Base
     def tags
       Tag.find(:all, :params => {:communication_id => id})
+    end
+    
+    def add_tag name
+      raise Error, "Tag name not specified.  Usage:  communication.add_tag('tag_name')" unless name
+      self.put(:add_tag, :tag => name)
+    end
+
+    def remove_tag name
+      raise Error, "Tag name not specified.  Usage:  communication.remove_tag('tag_name')" unless name
+      self.delete(:remove_tag, :tag => name)
     end
   end
 
