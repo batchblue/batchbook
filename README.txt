@@ -12,7 +12,7 @@ API : http://developer.batchblue.com/
 
 == FEATURES/PROBLEMS:
 
-Basic CRUD features for the data in your account: People, Companies, Communications, To-Dos.  Also custom methods for adding/removing Tags & SuperTags from a record, as well as updating SuperTag data for a particular record.
+Basic CRUD features for the data in your account: People, Companies, Communications, To-Dos, Deals.  Also custom methods for adding/removing Tags & SuperTags from a record, as well as updating SuperTag data for a particular record.
 
 == TODO:
 
@@ -31,6 +31,15 @@ ActiveResource::Base.logger = Logger.new(STDOUT)
 #also work for company
 search_by_name = BatchBook::Person.find(:all, :params => {:name => 'will larson'} )
 search_by_email = BatchBook::Person.find(:all, :params => {:email => will@batchblue.com})
+
+#Deal requests
+deal_by_email = BatchBook::Deal.find(:all, :params => {:assigned_to => 'eekrause@batchblue.com'})
+deal_by_status = BatchBook::Deal.find(:all, :params => {:status => 'lost'})
+
+#To add/remove a tag
+deal = BatchBook::Deal.find(1)
+deal.add_tag 'some tag'
+deal.remove_tag 'some tag'
 
 person = BatchBook::Person.find(5)
 => #<BatchBook::Person:0x1822c3c @attributes={"company"=>"BatchBlue Software", "title"=>"Software Developer", "id"=>5, "notes"=>nil, "first_name"=>"Will", "last_name"=>"Larson"}, @prefix_options={}>
