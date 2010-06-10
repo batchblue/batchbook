@@ -41,6 +41,12 @@ deal = BatchBook::Deal.find(1)
 deal.add_tag 'some tag'
 deal.remove_tag 'some tag'
 
+#To add/remove a comment
+comment = BatchBook::Comment.new :comment => "It's a lovely day"
+comment.deal = deal
+comment.save
+deal.comments.first.destroy
+
 person = BatchBook::Person.find(5)
 => #<BatchBook::Person:0x1822c3c @attributes={"company"=>"BatchBlue Software", "title"=>"Software Developer", "id"=>5, "notes"=>nil, "first_name"=>"Will", "last_name"=>"Larson"}, @prefix_options={}>
 
