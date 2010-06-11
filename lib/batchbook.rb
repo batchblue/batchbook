@@ -11,7 +11,7 @@ require 'active_resource'
 #
 #
 module BatchBook
-  VERSION = '1.0.3'
+  VERSION = '1.0.4'
 
   class Error < StandardError; end
   class << self
