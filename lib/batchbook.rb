@@ -179,6 +179,11 @@ module BatchBook
     def comment(id)
       comments(id)
     end
+    
+    def people
+      Person.find(:all, :params => {:company_id => self.id})
+      # self.get(:people)      
+    end
   end
 
   class Todo < Base
