@@ -233,6 +233,19 @@ module BatchBook
       comments(id)
     end
     
+    def contacts
+      Person.find(:all, :params => {:deal_id => self.id})
+    end
+    
+    def add_related_contact(contact_id)
+      raise Error, "Contact not specified.  Usage: deal.add_contact(50)" unless contact_id
+      self.put(:add_related_contact, :contact_id => contact_id)
+    end
+    
+    def remove_related_contact(contact_id)
+      raise Error, "Contact not specified.  Usage: deal.add_contact(50)" unless contact_id
+      self.delete(:remove_related_contact, :contact_id => contact_id)
+    end
   end
 
   class Communication < Base
