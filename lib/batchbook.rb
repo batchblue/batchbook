@@ -63,6 +63,14 @@ module BatchBook
     end
   end
 
+  class Activities < Base
+     
+    def self.recent
+      self.find(:all, :from => :recent)
+    end
+    
+  end
+  
   class Person < Base
     #http://developer.batchblue.com/people.html
     def tags
@@ -342,8 +350,6 @@ module BatchBook
 
   class SuperTag < Base
   end
-
-
 
 end
 
