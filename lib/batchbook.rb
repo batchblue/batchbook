@@ -153,6 +153,14 @@ module BatchBook
     def affiliations
       Affiliation.find(:all, :params => {:person_id => self.id})      
     end
+    
+    def communications
+      Communication.find(:all, :params => {:person_id => self.id})
+    end
+    
+    def add_communication communication_id
+      self.put(:add_communication, :communication_id => communication_id)
+    end
   end
 
   class Company < Base
