@@ -71,6 +71,10 @@ module BatchBook
     
   end
   
+  class Affiliation < Base    
+    
+  end
+  
   class Person < Base
     #http://developer.batchblue.com/people.html
     def tags
@@ -145,6 +149,10 @@ module BatchBook
     def comment(id)
       comments(id)
     end
+    
+    def affiliations
+      Affiliation.find(:all, :params => {:person_id => self.id})      
+    end
   end
 
   class Company < Base
@@ -191,6 +199,10 @@ module BatchBook
     def people
       Person.find(:all, :params => {:company_id => self.id})
       # self.get(:people)      
+    end
+    
+    def affiliations
+      Affiliation.find(:all, :params => {:company_id => self.id})      
     end
   end
 
