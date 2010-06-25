@@ -111,10 +111,13 @@ module BatchBook
     # Remove a SuperTag from a Person
     # DELETE https://test.batchbook.com/service/people/#{id}/super_tags/#{super_tag_name}.xml
 
-    def add_supertag name
+    def add_supertag name, params = {}
       raise Error, "Tag name not specified.  Usage:  person.add_supertag('tag_name')" unless name
 
       self.put(:add_tag, :tag => name)
+      unless params.empty?
+        self.put("super_tags/#{name}", :super_tag => params)
+      end
     end
 
     def add_tag name

@@ -82,6 +82,8 @@ person.save
 person.add_tag('some tag name')
 person.remove_tag('some tag name')
 
+person.add_supertag('some tag name', "some field" => "some value")
+
 person.add_location(  :email => 'test@here.com.au', :phone => '1234 1234', :cell => '2345 2345', :fax => '5678 5678',
                       :street_1 => 'Test Street 1', :street_2 => 'Test Street 2', :city => 'Test City', :state => 'VIC',
                       :postal_code => '1234', :country => 'Australia')
