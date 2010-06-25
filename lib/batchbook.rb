@@ -158,8 +158,8 @@ module BatchBook
       Communication.find(:all, :params => {:person_id => self.id})
     end
     
-    def add_communication communication_id
-      self.put(:add_communication, :communication_id => communication_id)
+    def todos
+      Todo.find(:all, :params => {:person_id => self.id})
     end
   end
 
