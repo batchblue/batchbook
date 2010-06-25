@@ -212,6 +212,14 @@ module BatchBook
     def affiliations
       Affiliation.find(:all, :params => {:company_id => self.id})      
     end
+    
+    def communications
+      Communication.find(:all, :params => {:company_id => self.id})
+    end
+    
+    def todos
+      Todo.find(:all, :params => {:company_id => self.id})
+    end
   end
 
   class Todo < Base
