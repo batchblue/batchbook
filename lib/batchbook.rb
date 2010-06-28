@@ -378,6 +378,9 @@ module BatchBook
 
   class SuperTag < Base
   end
+  
+  class Record < Base
+  end
 
 end
 
