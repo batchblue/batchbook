@@ -131,7 +131,7 @@ module BatchBook
 
       self.put(:add_tag, :tag => name)
       unless params.empty?
-        self.put("super_tags/#{name}", :super_tag => params)
+        self.put("super_tags/#{name.gsub(/ /, '_')}", :super_tag => params)
       end
     end
 
