@@ -3,8 +3,8 @@ Gem::Specification.new do |s|
   s.version = "1.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Will Larson"]
-  s.date = %q{2009-01-08}
+  s.authors = ["Will Larson", "Eric Krause"]
+  s.date = Time.now
   s.description = %q{Wrapper for BatchBook XML API}
   s.email = ["technical@batchblue.com"]
   s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
@@ -13,9 +13,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/batchblue/batchbook}
   s.rdoc_options = ["--main", "README.txt"]
   s.require_paths = ["lib"]
-  s.rubyforge_project = %q{batchbook}
-  s.rubygems_version = %q{1.2.0}
-  s.signing_key = %q{/Users/will/.gem/gem-private_key.pem}
+  s.signing_key = %q{/Users/erickrause/.gem/gem-private_key.pem}
   s.summary = %q{Wrapper for BatchBook XML API}
 
   s.add_dependency(%q<activeresource>, ["= 2.3.5"])
