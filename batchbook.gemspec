@@ -16,5 +16,5 @@ Gem::Specification.new do |s|
   s.signing_key = %q{/Users/erickrause/.gem/gem-private_key.pem}
   s.summary = %q{Wrapper for BatchBook XML API}
 
-  s.add_dependency(%q<activeresource>, ["= 2.3.5"])
+  s.add_dependency(%q<activeresource>, [">= 2.3.5"])
 end
