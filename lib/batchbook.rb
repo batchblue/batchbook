@@ -285,6 +285,10 @@ module BatchBook
       raise Error, "Contact not specified.  Usage: deal.add_contact(50)" unless contact_id
       self.delete(:remove_related_contact, :contact_id => contact_id)
     end
+    
+    def statuses
+      self.get(:statuses)      
+    end
   end
 
   class Communication < Base
@@ -384,7 +388,6 @@ module BatchBook
   
   class Record < Base
   end
-
 end
 
 __END__
