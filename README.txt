@@ -4,7 +4,7 @@ http://github.com/batchblue/batchbook
 
 == DESCRIPTION:
 
-Wrapper for BatchBook XML API
+Wrapper for Batchbook XML API
 
 == API
 
