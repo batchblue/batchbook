@@ -2,7 +2,7 @@ require 'rubygems'
 require 'active_resource'
 
 # Ruby lib for working with the BatchBook's API's XML interface. Set the account
-# name and authentication token, using the BatchBook API Key found in your
+# name and authentication token, using the Batchbook API Key found in your
 # account settings, and you're ready to roll.
 #
 # http://demo.batchbook.com
@@ -26,7 +26,7 @@ module BatchBook
       @account = name
     end
 
-    # Sets the BatchBook API Key for all resources.
+    # Sets the Batchbook API Key for all resources.
     def token=(value)
       resources.each do |r|
         r.user = value
@@ -131,13 +131,18 @@ module BatchBook
 
       self.put(:add_tag, :tag => name)
       unless params.empty?
-        self.put("super_tags/#{name.gsub(/ /, '_')}", :super_tag => params)
+        self.put("super_tags/#{name.gsub(/ /, '%20')}", :super_tag => params)
       end
     end
 
     def add_tag name
       raise Error, "Tag name not specified.  Usage:  person.add_tag('tag_name')" unless name
       self.put(:add_tag, :tag => name)
+    end
+
+    def add_tags names = []
+      raise Error, "Tag name not specified.  Usage:  person.add_tag('tag_name')" unless names
+      self.put(:add_tag, :tags => names)
     end
 
     def remove_tag name
@@ -188,10 +193,24 @@ module BatchBook
       raise Error, "SuperTag name not specified.  Usage:  person.supertag('tag_name')" unless name
       self.get('super_tags', :name => name)
     end
+    
+    def add_supertag name, params = {}
+      raise Error, "Tag name not specified.  Usage:  person.add_supertag('tag_name')" unless name
+
+      self.put(:add_tag, :tag => name)
+      unless params.empty?
+        self.put("super_tags/#{name.gsub(/ /, '%20')}", :super_tag => params)
+      end
+    end
 
     def add_tag name
       raise Error, "Tag name not specified.  Usage:  person.add_tag('tag_name')" unless name
       self.put(:add_tag, :tag => name)
+    end
+    
+    def add_tags names = []
+      raise Error, "Tag name not specified.  Usage:  person.add_tag('tag_name')" unless names
+      self.put(:add_tag, :tags => names)
     end
 
     def remove_tag name
@@ -247,6 +266,16 @@ module BatchBook
     def comment(id)
       comments(id)
     end
+    
+    def add_related_contact(contact_id)
+      raise Error, "Contact not specified.  Usage: deal.add_contact(50)" unless contact_id
+      self.put(:add_related_contact, :contact_id => contact_id)
+    end
+    
+    def remove_related_contact(contact_id)
+      raise Error, "Contact not specified.  Usage: deal.add_contact(50)" unless contact_id
+      self.delete(:remove_related_contact, :contact_id => contact_id)
+    end
   end
   
   class Deal < Base
@@ -257,6 +286,11 @@ module BatchBook
     def add_tag name
       raise Error, "Tag name not specified.  Usage:  deal.add_tag('tag_name')" unless name
       self.put(:add_tag, :tag => name)
+    end
+    
+    def add_tags names = []
+      raise Error, "Tag name not specified.  Usage:  person.add_tag('tag_name')" unless names
+      self.put(:add_tag, :tags => names)
     end
 
     def remove_tag name
@@ -288,6 +322,24 @@ module BatchBook
     
     def statuses
       self.get(:statuses)      
+    end
+    
+    def supertags
+      self.get('super_tags')
+    end
+
+    def supertag name
+      raise Error, "SuperTag name not specified.  Usage:  person.supertag('tag_name')" unless name
+      self.get('super_tags', :name => name)
+    end
+
+    def add_supertag name, params = {}
+      raise Error, "Tag name not specified.  Usage:  person.add_supertag('tag_name')" unless name
+
+      self.put(:add_tag, :tag => name)
+      unless params.empty?
+        self.put("super_tags/#{name.gsub(/ /, '%20')}", :super_tag => params)
+      end
     end
   end
 
@@ -387,6 +439,10 @@ module BatchBook
   end
   
   class Record < Base
+  end
+  
+  class User < Base
+    
   end
 end
 
