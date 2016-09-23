@@ -1,3 +1,9 @@
+=This API is deprecated.
+
+We have launched a new version of Batchbook and it has its own API which can be found : https://github.com/batchblue/batchbook-api.
+
+Please do not develop new integrations agains this API! We are leaving it this documentation in place soley as a reference for developers supporting existing integrations with “Batchbook Classic.”
+
 = batchbook
 
 http://github.com/batchblue/batchbook
